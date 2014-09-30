@@ -18,4 +18,23 @@ initializer 'disable_jce_restrictions.rb', <<-CODE
   java.lang.Class.for_name('javax.crypto.JceSecurity').get_declared_field('isRestricted').tap{|f| f.accessible = true; f.set nil, false}
 CODE
 
-generate("rspec:install")
+inject_into_file 'config/application.rb', :after => "class Application < Rails::Application" 
+  do 
+    <<-eos
+
+      config.i18n.default_locale = :de
+      
+      config.generators do |g|
+        g.test_framework      :rspec, fixture: true
+        g.fixture_replacement :fabrication
+      end
+
+    eos 
+end
+
+config.generators do |g|
+  g.test_framework      :rspec, fixture: true
+  g.fixture_replacement :fabrication
+end
+
+generate('rspec:install')

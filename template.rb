@@ -5,8 +5,6 @@
 #
 
 # gems
-gem 'activerecord-jdbcsqlite3-adapter'
-gem 'sass-rails', '~> 4.0.3'
 
 gem_group :development, :test do
   gem 'rspec-rails', '~> 2.14.1'
@@ -19,3 +17,5 @@ end
 initializer 'disable_jce_restrictions.rb', <<-CODE
   java.lang.Class.for_name('javax.crypto.JceSecurity').get_declared_field('isRestricted').tap{|f| f.accessible = true; f.set nil, false}
 CODE
+
+generate("rspec:install")
